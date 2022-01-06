@@ -22,6 +22,6 @@ Think 동아리 홈페이지는 메인 페이지, 커뮤니티 페이지, 지도
 
 각 페이지 별로 액터가 애플리케이션으로 할 작업들을 기록합니다.
 
-1. [동아리 멤버](./member.md)
-2. [일반 학생](./non-member.md)
-3. [지도 교수님](./professor.md)
+1. [동아리 멤버](./usecase/member.md)
+2. [일반 학생](./usecase/non-member.md)
+3. [지도 교수님](./usecase/professor.md)
