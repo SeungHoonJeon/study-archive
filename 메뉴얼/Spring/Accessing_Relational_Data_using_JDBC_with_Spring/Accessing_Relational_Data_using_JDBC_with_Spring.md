@@ -169,7 +169,11 @@ DDL(Data Definition Language) 쿼리문을 실행시키기 위해서, execute �
 
 ![INSERT, SELECT 쿼리문 실행 결과 확인](<./Accessing_Relational_Data_using_JDBC_with_Spring(4).png>)
 
-# 레퍼런스
+## 결론
+
+지금까지 Spring JDBC에서 제공하는 JdbcTemplate를 사용하여 관계형 데이터를 저장하고 조회해보는 내용을 배웠습니다. 이전에 JDBC API를 사용하기 위해서 드라이버(Driver)를 로딩하고, 커넥션(Connection) 객체를 얻고, 예외 처리(Exception Handling)를 하는 등 귀찮은 작업들이 존재했습니다. 하지만 이러한 작업들을 JdbcTemplate에게 맡기고 개발자는 오로지 관계형 데이터를 처리하는 작업에 집중할 수 있게 되었습니다. 스프링 부트가 H2 데이터베이스를 지원하기 때문에 별도의 데이터베이스 설정 작업이 필요하지 않아 편리하게 실습을 진행할 수 있었습니다. MySQL 같이 다른 DBMS와의 연동도 고려해 봐야 할 것입니다.
+
+## 레퍼런스
 
 - [CommandLineRunner](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/CommandLineRunner.html)
 - [Arrays](https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html)
