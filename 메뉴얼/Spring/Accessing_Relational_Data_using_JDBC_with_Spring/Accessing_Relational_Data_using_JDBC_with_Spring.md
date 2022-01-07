@@ -1,49 +1,68 @@
-# 스프링 JDBC 관계형 데이터베이스 연동 방법
+## 스프링 JDBC 관계형 데이터베이스 연동 방법
 
-본 내용은 Spring 공식 문서인 [Accessing Relational Data using JDBC with Spring](https://spring.io/guides/gs/relational-data-access/)를 간략하게 정리한 내용입니다. 정확한 내용은 해당 웹 사이트를 참고해주세요.
+본 내용은 Spring 공식 문서인 [Accessing Relational Data using JDBC with Spring](https://spring.io/guides/gs/relational-data-access/)를 정리한 내용입니다.
 
-# 다룰 내용
+## 다룰 내용
 
-스프링 JDBC **JdbcTemplate**를 사용하여 관계형 데이터베이스의 데이터를 조작하는 방법에 대해서 배웁니다.
+스프링 JDBC의 **JdbcTemplate**를 사용하여 관계형 데이터를 조작하는 방법에 대해서 배웁니다.
 
-# 실습 환경
+## 실습 환경
 
 - 텍스트 에디터 또는 통합 개발 환경(IDE, Integrated Development Environment)
 - JDK 1.8 버전 또는 그 이상
 - 그레이들 4 또는 메이븐 3.2
 
-# 스프링 이니셜라이즈로 시작하기
+## 스프링 이니셜라이즈로 시작하기
 
 원격 레포지토리에서 프로젝트를 클론해도 되지만, 스프링 이니셜라이즈로 프로젝트틀 생성하여
 
 한 단계씩 내용들을 살펴보겠습니다.
 
-- [프로젝트 생성 사이트](https://start.spring.io/)로 이동하여, 프로젝트를 설정합니다.
+[프로젝트 생성 사이트](https://start.spring.io/)로 이동하여, 프로젝트를 설정합니다.
 
-- 메이븐 프로젝트를 생성합니다.
-  ![메이븐 프로젝트 생성](<./Accessing_Relational_Data_using_JDBC_with_Spring(1).png>)
+### 메이븐 프로젝트를 생성합니다.
 
-- 의존성 라이브러리를 설정합니다.
-  ![의존성 라이브러리 설정](<./Accessing_Relational_Data_using_JDBC_with_Spring(2).png>)
+![메이븐 프로젝트 생성](<./Accessing_Relational_Data_using_JDBC_with_Spring(1).png>)
 
-**JDBC API** : Java로 관계형 데이터베이스에 연결하거나 쿼리문을 실행시키기 위한 표준 인터페이스 API 입니다.
-**H2 Database** : Java로 만들어진 인 메모리 관계형 데이터베이스 엔진입니다.
+### 의존성 라이브러리를 설정합니다.
 
-# 데이터를 저장하는 클래스 작성하기
+![의존성 라이브러리 설정](<./Accessing_Relational_Data_using_JDBC_with_Spring(2).png>)
+
+- **JDBC API** : Java로 관계형 데이터베이스에 연결하거나 쿼리문을 실행시키기 위한 표준 인터페이스 API 입니다.
+- **H2 Database** : Java로 만들어진 인 메모리 관계형 데이터베이스 엔진입니다.
+
+## 데이터를 저장하는 클래스 작성하기
 
 애플리케이션에는 다양한 데이터들이 있습니다. 이 데이터들을 데이터베이스에 저장하기 위해서는
 
 클래스로 변환을 해야 합니다. 즉, 데이터를 담을 그릇을 정의해야합니다.
 
-이 내용에서는 **Customer** 클래스를 작성합니다.
+다음 **Customer** 클래스를 작성합니다.
 
-# 데이터를 저장하고 조회하기
+```
+public class Customer {
 
-스프링은 관계형 데이터베이스와 JDBC를 쉽게 조작할 수 있도록 **JdbcTemplate** 클래스를 제공합니다.
+	private long id;
+	private String firstName, lastName;
 
-다음은 JdbcTemplate 예제 코드를 부분 별로 알아보겠습니다.
+	public Customer(long id, String firstName, String lastName) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 
-# 애플리케이션 메인 메소드
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+	}
+}
+```
+
+## 데이터를 저장하고 조회하기
+
+스프링은 관계형 데이터베이스와 JDBC API를 쉽게 조작할 수 있도록 **JdbcTemplate** 클래스를 제공합니다.
+
+## 애플리케이션 메인 메소드
 
 ```
 @SpringBootApplication
@@ -68,7 +87,7 @@ main 메소드는 스프링 부트의 run 메소드를 호출하여 애플리케
 - **@EnableAutoConfiguration** : 스프링 부트의 자동 설정 기능을 활성화 시키는 어노테이션입니다.
 - **@ComponentScan** : DemoApplication 클래스가 속해 있는 패키지를 기준으로 다른 컴포넌트(객체)를 인식하는 어노테이션입니다.
 
-# JdbcTemplate 의존성 주입
+## JdbcTemplate 의존성 주입
 
 앞서 프로젝트의 의존성 라이브러리 설정에서 **Spring JDBC 라이브러리**를 추가했습니다.
 
@@ -89,7 +108,7 @@ public class DemoApplication {
 }
 ```
 
-# JdbcTemplate: excute 메소드
+## JdbcTemplate: excute 메소드
 
 DDL(Data Definition Language) 쿼리문을 실행시키기 위해서, execute 메소드를 호출합니다.
 
@@ -107,7 +126,7 @@ DDL(Data Definition Language) 쿼리문을 실행시키기 위해서, execute �
 **첫 번째 SQL 문**은 customers 테이블이 존재하면 기존 테이블을 삭제합니다.
 **두 번째 SQL 문**은 id, first_name, last_name 열(Column)을 갖는 새로운 customers 테이블을 생성합니다.
 
-# jdbcTemplate: batchUpdate, query 메소드
+## jdbcTemplate: batchUpdate, query 메소드
 
 ```
 @Override
@@ -142,11 +161,11 @@ DDL(Data Definition Language) 쿼리문을 실행시키기 위해서, execute �
 	}
 ```
 
-# 실행결과 확인
+## 실행결과 확인
 
 ![INSERT, SELECT 쿼리문 실행 결과 확인](<./Accessing_Relational_Data_using_JDBC_with_Spring(4).png>)
 
-# Reference
+# 레퍼런스
 
 - [CommandLineRunner](https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/CommandLineRunner.html)
 - [Arrays](https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html)
